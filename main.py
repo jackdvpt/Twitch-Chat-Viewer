@@ -66,12 +66,12 @@ def formhandler(id):
     blah = id
     url = 'https://www.twitch.tv/videos/'+blah
     comments = ChatDownloader().get_chat(url)       # create a generator
-    
+
     outs = []
     a = []
     print("starting")
     for c in comments:
-        #print(c)
+      
         col = "red"
         badg=""
         if "badges" in c["author"]:
@@ -103,7 +103,8 @@ def formhandler(id):
             'content': outs, 
             'col':'red', 
             'total':chatTotal, 
-        'id': blah
+        'id': blah,
+        'id_real':id
             }
 
     return template("simple.tpl", info)
