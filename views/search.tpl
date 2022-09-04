@@ -9,12 +9,11 @@
 
 <body style=" background-color: #18181b;">
     <form method="post" action="/list">
-        <fieldset>
+    
             <legend style="font-family: 'Montserrat', sans-serif; color:white; font-size: 100px">SEARCH FOR A CHANNELS NAME</legend>
         <input type="text" name="first" style="  width: 80%;  padding: 12px 20px;  font-size: 24px;font-family: 'Work Sans', sans-serif;    font-weight: 600;  ">
                
-           <input type='submit' value='Submit Form' style="width100%;">
-        </fieldset>
+          <input type="submit" value="SEARCH" style="background-color: purple;border: none;color: white;text-decoration: none;cursor: pointer;width: 19%;padding-top: 6px;padding-bottom: 14px;font-family: 'Work Sans', sans-serif;font-weight: bold;font-size: 34px;">
     </form>
 
 

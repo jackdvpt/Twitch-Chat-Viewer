@@ -48,7 +48,8 @@ def searchtwitch():
     
     vid = twitch.get_videos(user_id=user_id)
     info = {
-        'title': vid["data"]
+        'title': vid["data"],
+        'person':blah.upper()
             }
 
     return template("lister.tpl", info)
