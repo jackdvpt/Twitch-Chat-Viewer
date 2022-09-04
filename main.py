@@ -69,6 +69,7 @@ def formhandler(id):
     
     outs = []
     a = []
+    print("starting")
     for c in comments:
         #print(c)
         col = "red"
@@ -79,7 +80,6 @@ def formhandler(id):
                 badg+= """<img src=" """+b["icons"][0]["url"]+""" ">"""
         if "colour" in c["author"]:
             col =  c["author"]["colour"]    
-        print(col)
         a.append((c["author"]["name"], col))
         hours=str(math.trunc(c["time_in_seconds"]//3600))
         minutes=str(math.trunc((c["time_in_seconds"]%3600)//60))
@@ -93,11 +93,9 @@ def formhandler(id):
     uniqueNames = list(set(a))
     for name in uniqueNames:
         count = 0
-        print(name[0])
         for message in outs:
             if str(name[0]) in message[1]:
                 count+=1
-        print(name, count)
         finalNames.append((name[0], name[1], count))
     finalNames.sort(key=lambda x:x[2] , reverse =True)
     info = {
