@@ -1,5 +1,3 @@
-import os
-
 from bottle import route, template, redirect, static_file, error, run
 import config
 from twitchAPI.twitch import Twitch
@@ -67,6 +65,7 @@ def formhandler(id):
     url = 'https://www.twitch.tv/videos/'+blah
     comments = ChatDownloader().get_chat(url)       # create a generator
 
+    engagement = dict()
     outs = []
     a = []
     print("starting")
@@ -81,13 +80,23 @@ def formhandler(id):
         if "colour" in c["author"]:
             col =  c["author"]["colour"]    
         a.append((c["author"]["name"], col))
+        
         hours=str(math.trunc(c["time_in_seconds"]//3600))
         minutes=str(math.trunc((c["time_in_seconds"]%3600)//60))
         seconds=str(math.trunc((c["time_in_seconds"]%3600)%60))
         d="{}h{}m{}s".format(hours, minutes, seconds)
         text = helper.emotes(c)
+        timeForChart = "{}h{}m".format(hours, minutes)
         outs.append((d, c["author"]["name"], text,col, badg))
+        #engagement
+        if timeForChart not in engagement:
+            engagement[timeForChart] = 1
+        else:
+            engagement[timeForChart] = engagement[timeForChart] +1
     chatTotal = len(outs)
+    eng = helper.engagementChart(engagement)
+
+
 
     finalNames = []
     uniqueNames = list(set(a))
@@ -98,7 +107,11 @@ def formhandler(id):
                 count+=1
         finalNames.append((name[0], name[1], count))
     finalNames.sort(key=lambda x:x[2] , reverse =True)
+    print(finalNames)
+    
+
     info = {
+        'engagement': eng,
         'title': finalNames,
             'content': outs, 
             'col':'red', 
@@ -134,7 +147,6 @@ def formhandler(id):
                 badg+= """<img src=" """+b["icons"][0]["url"]+""" ">"""
         if "colour" in c["author"]:
             col =  c["author"]["colour"]    
-        print(col)
         a.append((c["author"]["name"], col))
         hours=str(math.trunc(c["time_in_seconds"]//3600))
         minutes=str(math.trunc((c["time_in_seconds"]%3600)//60))
@@ -148,11 +160,9 @@ def formhandler(id):
     uniqueNames = list(set(a))
     for name in uniqueNames:
         count = 0
-        print(name[0])
         for message in outs:
             if str(name[0]) in message[1]:
                 count+=1
-        print(name, count)
         finalNames.append((name[0], name[1], count))
     finalNames.sort(key=lambda x:x[2] , reverse =True)
     info = {

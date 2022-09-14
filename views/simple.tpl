@@ -27,7 +27,29 @@
         chart.draw(data, options);
       }
     </script>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
 
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Messages'],
+               % for j in engagement:
+            ['{{j}}',     {{engagement[j]}}],
+        %end
+        ]);
+
+        var options = {
+          title: 'Chat Engagement',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
 
  <script src=
 "https://code.jquery.com/jquery-1.12.4.min.js">
@@ -113,10 +135,7 @@
 {
     text-align:center;
 }
-#piechart, #vid
-{
-    display:inline;
-}
+
     </style>
 </head>
 
@@ -128,8 +147,11 @@
        
   <input type="submit" value="SEARCH" style="background-color: purple;border: none;color: white;text-decoration: none;cursor: pointer;width: 19%;padding-top: 6px;padding-bottom: 14px;font-family: 'Work Sans', sans-serif;font-weight: bold;font-size: 34px;">
 </form>
-<div id="block_container">
+
+    <div id="curve_chart" style="width: 1200px; height: 500px"></div>
+
     <div id="piechart" style="width: 900px; height: 500px;"></div>
+<div id="block_container">
 
     <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
 <div id="vid"></div>
