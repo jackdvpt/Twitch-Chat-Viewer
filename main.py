@@ -56,21 +56,18 @@ def searchtwitch():
 
 
 @app.route('/vod/<id>')
-def formhandler(id):
-    
-    #"1160590614"
-    """Handle the form submission"""
-
-    blah = id
-    url = 'https://www.twitch.tv/videos/'+blah
+def chatboi(id):
+    url = 'https://www.twitch.tv/videos/'+id
     comments = ChatDownloader().get_chat(url)       # create a generator
-
     engagement = dict()
     outs = []
     a = []
     print("starting")
     for c in comments:
-      
+        # Ideas
+        # - dump the badges list and do that on view 
+        # - do the charts through javascript
+        # - Possibly the easiest solution is to have the page load and then make a request to a websocket https://bottlepy.org/docs/dev/async.html to fetch the jam they need and then injavascript create the row for each chat item with everything in toe. 
         col = "red"
         badg=""
         if "badges" in c["author"]:
