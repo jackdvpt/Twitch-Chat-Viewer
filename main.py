@@ -32,14 +32,14 @@ def index():
     return template("search.tpl", info)
 
 
-@app.route('/list', method="POST")
+@app.route('/list/<name>')
 def searchtwitch():
 
     # create instance of twitch API
     twitch = Twitch(config.one, config.two)
     twitch.authenticate_app([])
     
-    blah = request.forms.get('first')
+    blah = name
     # get ID of user
     user_info = twitch.get_users(logins=[blah])
     user_id = user_info['data'][0]['id']
